@@ -15,6 +15,7 @@ import org.junit.Test
 import org.mozilla.fenix.helpers.AndroidAssetDispatcher
 import org.mozilla.fenix.helpers.HomeActivityTestRule
 import org.mozilla.fenix.helpers.TestAssetHelper
+import org.mozilla.fenix.ui.robots.addButtonClick
 import org.mozilla.fenix.ui.robots.homeScreen
 import org.mozilla.fenix.ui.robots.navigationToolbar
 
@@ -23,7 +24,6 @@ import org.mozilla.fenix.ui.robots.navigationToolbar
  * These tests will verify different functionalities of the app as a way to quickly detect regressions in main areas
  */
 
-@Ignore("Temp disable for triggering a native Gecko crash - https://github.com/mozilla-mobile/fenix/issues/11642")
 class SmokeTest {
     private val mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
     private lateinit var mockWebServer: MockWebServer
@@ -44,6 +44,7 @@ class SmokeTest {
         mockWebServer.shutdown()
     }
 
+    @Ignore("Temp disable for triggering a native Gecko crash - https://github.com/mozilla-mobile/fenix/issues/11642")
     @Test
     fun verifyBasicNavigationToolbarFunctionality() {
         val defaultWebPage = TestAssetHelper.getGenericAsset(mockWebServer, 1)
@@ -62,6 +63,22 @@ class SmokeTest {
             }.openHomeScreen {
                 verifyHomeScreen()
             }
+        }
+    }
+
+    @Test
+    fun verifyAddOnsCanBeUninstalledFunctionality() {
+        homeScreen {
+        }.openThreeDotMenu {
+        }.openSettings {
+        }.openSettingsSubMenuAddons {
+            addButtonClick("Dark Reader", 3)
+        }
+
+        homeScreen {
+        }.openThreeDotMenu {
+        }.openSettings {
+        }.openSettingsSubMenuAddons {
         }
     }
 }

@@ -204,6 +204,15 @@ class SettingsRobot {
             SettingsSubMenuDataCollectionRobot().interact()
             return SettingsSubMenuDataCollectionRobot.Transition()
         }
+
+        fun openSettingsSubMenuAddons(interact: SettingsSubMenuAddonsRobot.() -> Unit): SettingsSubMenuAddonsRobot.Transition {
+            scrollToElementByText("Add-ons")
+            fun addonsButton() = mDevice.findObject(textContains("Add-ons"))
+            addonsButton().click()
+
+            SettingsSubMenuAddonsRobot().interact()
+            return SettingsSubMenuAddonsRobot.Transition()
+        }
     }
 
     companion object {
